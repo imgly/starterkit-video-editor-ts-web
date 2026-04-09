@@ -15,7 +15,7 @@ import { initVideoEditor } from './imgly';
 // ============================================================================
 
 const config = {
-  userId: 'starterkit-video-editor-user',
+  userId: 'starterkit-video-editor-user'
 
   // Local assets
   // baseURL: `/assets/`,
