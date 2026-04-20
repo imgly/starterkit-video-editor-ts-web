@@ -3,8 +3,7 @@
 Create and edit videos for your web app — trim clips, add text, apply transitions, and export to MP4. Built with [CE.SDK](https://img.ly/creative-sdk) by [IMG.LY](https://img.ly), runs entirely in the browser with no server dependencies.
 
 <p>
-  <a href="https://img.ly/docs/cesdk/starterkits/video-editor/">Documentation</a> |
-  <a href="https://img.ly/showcases/cesdk">Live Demo</a>
+  <a href="https://img.ly/docs/cesdk/js/starterkits/video-editor-e1nlor/">Documentation</a>
 </p>
 
 ![Video Editor starter kit showing a video editing interface with timeline](./hero.webp)

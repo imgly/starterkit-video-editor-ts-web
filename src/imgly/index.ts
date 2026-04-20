@@ -18,6 +18,7 @@ import {
   EffectsAssetSource,
   FiltersAssetSource,
   PagePresetsAssetSource,
+  PremiumTemplatesAssetSource,
   StickerAssetSource,
   TextComponentAssetSource,
   TypefaceAssetSource,
@@ -149,6 +150,13 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
   // Vector shapes (rectangles, circles, arrows, etc.)
   await cesdk.addPlugin(new VectorShapeAssetSource());
 
+  // Premium templates
+  await cesdk.addPlugin(
+    new PremiumTemplatesAssetSource({
+      include: ['ly.img.templates.premium.*']
+    })
+  );
+
   // ============================================================================
   // Localization
   // ============================================================================
@@ -179,11 +187,4 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
     }
   );
 
-  // ============================================================================
-  // Scene Loading
-  // ============================================================================
-
-  await cesdk.loadFromArchiveURL(
-    'https://cdn.img.ly/packages/imgly/plugin-marketing-asset-source-web/1.0.0/assets/templates/video-fashion-portfolio.zip'
-  );
 }
