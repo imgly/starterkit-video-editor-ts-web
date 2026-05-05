@@ -186,5 +186,4 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
       }
     }
   );
-
 }
