@@ -15,10 +15,12 @@ import { initVideoEditor } from './imgly';
 // ============================================================================
 
 const config = {
-  userId: 'starterkit-video-editor-user'
+  userId: 'starterkit-video-editor-user',
 
-  // Local assets
-  // baseURL: `/assets/`,
+  // IMG.LY CDN (for quick testing only, NOT recommended for production)
+
+  // Local assets for development
+
 };
 
 // ============================================================================
