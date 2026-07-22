@@ -29,11 +29,11 @@ import {
 } from '@cesdk/cesdk-js/plugins';
 
 // Configuration and plugins
-import { VideoEditorConfig } from '../../video-editor/plugin';
+import { VideoEditorConfig } from './config/plugin';
 import { setupBackgroundRemovalPlugin } from './plugins/background-removal';
 
 // Re-export for external use
-export { VideoEditorConfig } from '../../video-editor/plugin';
+export { VideoEditorConfig } from './config/plugin';
 export { setupBackgroundRemovalPlugin } from './plugins/background-removal';
 
 /**
