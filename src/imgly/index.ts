@@ -28,13 +28,13 @@ import {
   UploadAssetSources
 } from '@cesdk/cesdk-js/plugins';
 
+import BackgroundRemovalPlugin from '@imgly/plugin-background-removal-web';
+
 // Configuration and plugins
 import { VideoEditorConfig } from './config/plugin';
-import { setupBackgroundRemovalPlugin } from './plugins/background-removal';
 
 // Re-export for external use
 export { VideoEditorConfig } from './config/plugin';
-export { setupBackgroundRemovalPlugin } from './plugins/background-removal';
 
 /**
  * Initialize the CE.SDK Video Editor with a complete configuration.
@@ -64,14 +64,6 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
   // Configure appearance: 'light' | 'dark' | 'system'
   // cesdk.setTheme('dark');
   // cesdk.setLocale('en');
-
-  // ============================================================================
-  // Background Removal Plugin
-  // ============================================================================
-
-  // Setup AI-powered background removal
-  // Requires: npm install @imgly/background-removal onnxruntime-web
-  setupBackgroundRemovalPlugin(cesdk);
 
   // ============================================================================
   // Asset Source Plugins
@@ -187,5 +179,18 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
         });
       }
     }
+  );
+
+  // ============================================================================
+  // Background Removal Plugin
+  // ============================================================================
+
+  await cesdk.addPlugin(
+    BackgroundRemovalPlugin({
+      ui: { locations: ['canvasMenu'] },
+      provider: {
+        type: '@imgly/background-removal'
+      }
+    })
   );
 }
