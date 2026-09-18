@@ -4,7 +4,7 @@
  * This module provides the main entry point for initializing the video editor.
  * Import and call `initVideoEditor()` to configure a CE.SDK instance for video editing.
  *
- * @see https://img.ly/docs/cesdk/js/getting-started/
+ * @see https://img.ly/docs/cesdk/js/get-started/overview-e18f40/
  */
 
 import type CreativeEditorSDK from '@cesdk/cesdk-js';
@@ -28,13 +28,13 @@ import {
   UploadAssetSources
 } from '@cesdk/cesdk-js/plugins';
 
+import BackgroundRemovalPlugin from '@imgly/plugin-background-removal-web';
+
 // Configuration and plugins
-import { VideoEditorConfig } from '../../video-editor/plugin';
-import { setupBackgroundRemovalPlugin } from './plugins/background-removal';
+import { VideoEditorConfig } from './config/plugin';
 
 // Re-export for external use
-export { VideoEditorConfig } from '../../video-editor/plugin';
-export { setupBackgroundRemovalPlugin } from './plugins/background-removal';
+export { VideoEditorConfig } from './config/plugin';
 
 /**
  * Initialize the CE.SDK Video Editor with a complete configuration.
@@ -43,7 +43,6 @@ export { setupBackgroundRemovalPlugin } from './plugins/background-removal';
  * - Video editor UI configuration
  * - Background removal plugin
  * - Asset source plugins (videos, audio, images, effects, etc.)
- * - Custom translations
  * - Export video button in navigation bar
  *
  * @param cesdk - The CreativeEditorSDK instance to configure
@@ -66,126 +65,116 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
   // cesdk.setLocale('en');
 
   // ============================================================================
-  // Background Removal Plugin
-  // ============================================================================
-
-  // Setup AI-powered background removal
-  // Requires: npm install @imgly/background-removal onnxruntime-web
-  setupBackgroundRemovalPlugin(cesdk);
-
-  // ============================================================================
   // Asset Source Plugins
   // ============================================================================
 
   // Asset source plugins provide built-in asset libraries
 
   // Blur presets for blur effects
-  await cesdk.addPlugin(new BlurAssetSource());
+  await Promise.all([
+    cesdk.addPlugin(new BlurAssetSource()),
 
-  // Caption presets for video captions
-  await cesdk.addPlugin(new CaptionPresetsAssetSource());
+    // Caption presets for video captions
+    cesdk.addPlugin(new CaptionPresetsAssetSource()),
 
-  // Color palettes for design
-  await cesdk.addPlugin(new ImageColorsAssetSource());
-  await cesdk.addPlugin(new ColorPaletteAssetSource());
+    // Color palettes for design
+    cesdk.addPlugin(new ImageColorsAssetSource()),
+    cesdk.addPlugin(new ColorPaletteAssetSource()),
 
-  // Crop presets (aspect ratios)
-  await cesdk.addPlugin(new CropPresetsAssetSource());
+    // Crop presets (aspect ratios)
+    cesdk.addPlugin(new CropPresetsAssetSource()),
 
-  // Local upload sources (images, videos, audio)
-  await cesdk.addPlugin(
-    new UploadAssetSources({
-      include: [
-        'ly.img.image.upload',
-        'ly.img.video.upload',
-        'ly.img.audio.upload'
-      ]
-    })
-  );
+    // Local upload sources (images, videos, audio)
+    cesdk.addPlugin(
+      new UploadAssetSources({
+        include: [
+          'ly.img.image.upload',
+          'ly.img.video.upload',
+          'ly.img.audio.upload'
+        ]
+      })
+    ),
 
-  // Demo assets (images, videos, audio, stickers, templates)
-  await cesdk.addPlugin(
-    new DemoAssetSources({
-      include: [
-        'ly.img.templates.video.*',
-        'ly.img.image.*',
-        'ly.img.audio.*',
-        'ly.img.video.*'
-      ]
-    })
-  );
+    // Demo assets (images, videos, audio, stickers, templates)
+    cesdk.addPlugin(
+      new DemoAssetSources({
+        include: [
+          'ly.img.templates.video.*',
+          'ly.img.image.*',
+          'ly.img.audio.*',
+          'ly.img.video.*'
+        ]
+      })
+    ),
 
-  // Visual effects (adjustments, vignette, etc.)
-  await cesdk.addPlugin(new EffectsAssetSource());
+    // Visual effects (adjustments, vignette, etc.)
+    cesdk.addPlugin(new EffectsAssetSource()),
 
-  // Photo filters (LUT, duotone)
-  await cesdk.addPlugin(new FiltersAssetSource());
+    // Photo filters (LUT, duotone)
+    cesdk.addPlugin(new FiltersAssetSource()),
 
-  // Page format presets (social media video sizes)
-  await cesdk.addPlugin(
-    new PagePresetsAssetSource({
-      include: [
-        'ly.img.page.presets.instagram.*',
-        'ly.img.page.presets.facebook.*',
-        'ly.img.page.presets.x.*',
-        'ly.img.page.presets.linkedin.*',
-        'ly.img.page.presets.pinterest.*',
-        'ly.img.page.presets.tiktok.*',
-        'ly.img.page.presets.youtube.*',
-        'ly.img.page.presets.video.*'
-      ]
-    })
-  );
+    // Page format presets (social media video sizes)
+    cesdk.addPlugin(
+      new PagePresetsAssetSource({
+        include: [
+          'ly.img.page.presets.instagram.*',
+          'ly.img.page.presets.facebook.*',
+          'ly.img.page.presets.x.*',
+          'ly.img.page.presets.linkedin.*',
+          'ly.img.page.presets.pinterest.*',
+          'ly.img.page.presets.tiktok.*',
+          'ly.img.page.presets.youtube.*',
+          'ly.img.page.presets.video.*'
+        ]
+      })
+    ),
 
-  // Sticker assets
-  await cesdk.addPlugin(new StickerAssetSource());
+    // Sticker assets
+    cesdk.addPlugin(new StickerAssetSource()),
 
-  // Text presets (headlines, body text styles)
-  await cesdk.addPlugin(new TextAssetSource());
+    // Text presets (headlines, body text styles)
+    cesdk.addPlugin(new TextAssetSource()),
 
-  // Text components (pre-designed text layouts)
-  await cesdk.addPlugin(new TextComponentAssetSource());
+    // Text components (pre-designed text layouts)
+    cesdk.addPlugin(new TextComponentAssetSource()),
 
-  // Typeface/font assets
-  await cesdk.addPlugin(new TypefaceAssetSource());
+    // Typeface/font assets
+    cesdk.addPlugin(new TypefaceAssetSource()),
 
-  // Vector shapes (rectangles, circles, arrows, etc.)
-  await cesdk.addPlugin(new VectorShapeAssetSource());
+    // Vector shapes (rectangles, circles, arrows, etc.)
+    cesdk.addPlugin(new VectorShapeAssetSource()),
 
-  // Premium templates
-  await cesdk.addPlugin(
-    new PremiumTemplatesAssetSource({
-      include: ['ly.img.templates.premium.*']
-    })
-  );
-
-  // ============================================================================
-  // Localization
-  // ============================================================================
-
-  // Add custom translations for UI labels
-  cesdk.i18n.setTranslations({
-    en: { 'actions.export.video': 'Export Video' }
-  });
+    // Premium templates
+    cesdk.addPlugin(
+      new PremiumTemplatesAssetSource({
+        include: ['ly.img.templates.premium.*']
+      })
+    )
+  ]);
 
   // ============================================================================
   // Navigation Bar Button
   // ============================================================================
 
-  // Add export video button to navigation bar
+  // Add the built-in "Export Video" button, styled as an accent (primary) action.
   cesdk.ui.insertOrderComponent(
     { in: 'ly.img.navigation.bar', position: 'end' },
     {
-      id: 'ly.img.action.navigationBar',
-      key: 'actions.export.video',
-      color: 'accent',
-      icon: '@imgly/Video',
-      label: 'actions.export.video',
-      onClick: async () => {
-        await cesdk.actions.run('exportDesign', {
-          mimeType: 'video/mp4'
-        });
-      }
+      id: 'ly.img.exportVideo.navigationBar',
+      color: 'accent'
     }
+  );
+
+  // ============================================================================
+  // Background Removal Plugin
+  // ============================================================================
+
+  await cesdk.addPlugin(
+    BackgroundRemovalPlugin({
+      ui: { locations: ['canvasMenu'] },
+      provider: {
+        type: '@imgly/background-removal'
+      }
+    })
   );
 }
