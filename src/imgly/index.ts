@@ -19,7 +19,6 @@ import {
   EffectsAssetSource,
   FiltersAssetSource,
   PagePresetsAssetSource,
-  PremiumTemplatesAssetSource,
   StickerAssetSource,
   TextComponentAssetSource,
   TypefaceAssetSource,
@@ -142,14 +141,7 @@ export async function initVideoEditor(cesdk: CreativeEditorSDK) {
     cesdk.addPlugin(new TypefaceAssetSource()),
 
     // Vector shapes (rectangles, circles, arrows, etc.)
-    cesdk.addPlugin(new VectorShapeAssetSource()),
-
-    // Premium templates
-    cesdk.addPlugin(
-      new PremiumTemplatesAssetSource({
-        include: ['ly.img.templates.premium.*']
-      })
-    )
+    cesdk.addPlugin(new VectorShapeAssetSource())
   ]);
 
   // ============================================================================
